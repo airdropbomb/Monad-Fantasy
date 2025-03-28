@@ -2,9 +2,8 @@
 Automated tool for managing Fantasy accounts on Monad.
 
 ## Contacts
-* Telegram Channel: [unluck_1l0ck](https://t.me/unluck_1l0ck)
-* Telegram: @one_lock
-* Twitter/X: [@1l0ck](https://x.com/1l0ck)
+* Telegram Channel: [unluck_1l0ck](https://t.me/airdropbombnode)
+* Telegram: @airdropbombnode
 
 ## Description
 This script automates the processes of authorization and performing daily tasks for multiple Fantasy accounts. Main features:
@@ -178,7 +177,7 @@ The tournament registration module allows automatic participation in various Fan
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/onel0ck/Monad-Fantasy
+git clone https://github.com/airdropbomb/Monad-Fantasy
 cd Monad-Fantasy
 ```
 
