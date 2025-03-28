@@ -18,12 +18,12 @@ from src.main import FantasyProcessor
 
 def print_banner():
     banner = f"""
-{Fore.CYAN}██╗   ██╗███╗   ██╗██╗     ╔███████╗ ██████╗██╗  ██╗
-{Fore.CYAN}██║   ██║████╗  ██║██║     ██║   ██║██╔════╝██║ ██╔╝
-{Fore.CYAN}██║   ██║██╔██╗ ██║██║     ██║   ██║██║     █████╔╝ 
-{Fore.CYAN}██║   ██║██║╚██╗██║██║     ██║   ██║██║     ██╔═██╗ 
-{Fore.CYAN}╚██████╔╝██║ ╚████║███████╗╚██████╔╝╚██████╗██║  ██╗
-{Fore.CYAN} ╚═════╝ ╚═╝  ╚═══╝╚══════╝ ╚═════╝  ╚═════╝╚═╝  ╚═╝
+{Fore.CYAN}█████╗ ██████╗ ██████╗     ███╗   ██╗ ██████╗ ██████╗ ███████╗
+{Fore.CYAN}██╔══██╗██╔══██╗██╔══██╗    ████╗  ██║██╔═══██╗██╔══██╗██╔════╝
+{Fore.CYAN}███████║██║  ██║██████╔╝    ██╔██╗ ██║██║   ██║██║  ██║█████╗  
+{Fore.CYAN}██╔══██║██║  ██║██╔══██╗    ██║╚██╗██║██║   ██║██║  ██║██╔══╝  
+{Fore.CYAN}██║  ██║██████╔╝██████╔╝    ██║ ╚████║╚██████╔╝██████╔╝███████╗
+{Fore.CYAN}╚═╝  ╚═╝╚═════╝ ╚═════╝     ╚═╝  ╚═══╝ ╚═════╝ ╚═════╝ ╚══════╝
 
 {Fore.GREEN}Created by: {Fore.CYAN}@one_lock
 {Fore.GREEN}Channel: {Fore.CYAN}https://t.me/unluck_1l0ck
@@ -90,7 +90,13 @@ def main():
         
         clear_log_files(config)
         
+        # Proxy ကို optional ဖြစ်အောင် ပြင်ဆင်
         proxies_dict, all_proxies = read_proxies(config['app']['proxy_file'])
+        if not all_proxies:
+            info_log("No proxies found. Proceeding without proxies.")
+            proxies_dict = None
+            all_proxies = []
+        
         user_agents_cycle = read_user_agents()
         accounts = read_accounts(config['app']['keys_file'])
         
