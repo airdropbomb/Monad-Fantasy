@@ -2,7 +2,7 @@
 Automated tool for managing Fantasy accounts on Monad.
 
 ## Contacts
-* Telegram Channel: [unluck_1l0ck](https://t.me/airdropbombnode)
+* Telegram Channel: [ADB Node](https://t.me/airdropbombnode)
 * Telegram: @airdropbombnode
 
 ## Description
