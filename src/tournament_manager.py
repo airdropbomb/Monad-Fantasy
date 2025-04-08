@@ -33,16 +33,16 @@ class TournamentManager:
                 'Origin': 'https://monad.fantasy.top',
                 'Referer': 'https://monad.fantasy.top/',
                 'User-Agent': self.api.user_agent,
-                'Priority': 'u=1, i',
-                'Sec-Ch-Ua': '"Not A(Brand";v="8", "Chromium";v="132", "Google Chrome";v="132"',
-                'Sec-Ch-Ua-Mobile': '?0',
-                'Sec-Ch-Ua-Platform': '"Windows"',
+                'sec-ch-ua': '"Not A(Brand";v="8", "Chromium";v="132", "Google Chrome";v="132"',
+                'sec-ch-ua-mobile': '?0',
+                'sec-ch-ua-platform': '"Windows"',
                 'Sec-Fetch-Dest': 'empty',
                 'Sec-Fetch-Mode': 'cors',
-                'Sec-Fetch-Site': 'same-site'
+                'Sec-Fetch-Site': 'same-site',
+                'Priority': 'u=1, i'
             }
             
-            page = 0
+            page = 1
             limit = 100
             cards = []
             
@@ -50,12 +50,9 @@ class TournamentManager:
                 params = {
                     'pagination.page': page,
                     'pagination.limit': limit,
-                    'where.heroes.name.contains': '',
-                    'where.heroes.handle.contains': '',
                     'where.rarity.in': [1, 2, 3, 4],
                     'orderBy': 'cards_score_desc',
                     'groupCard': 'true',
-                    'isProfile': 'true',
                     'isGalleryView': 'false'
                 }
                 
@@ -82,6 +79,7 @@ class TournamentManager:
                 
                 if response.status_code != 200:
                     error_log(f"Failed to fetch cards for account {account_number}: {response.status_code}")
+                    debug_log(f"Response: {response.text[:200]}")
                     return []
                 
                 data = response.json()
@@ -90,13 +88,22 @@ class TournamentManager:
                     
                 for card in data.get('data', []):
                     if not card.get('is_in_deck', False):
-                        cards.append(card)
+                        processed_card = {
+                            'id': card.get('id'),
+                            'heroes': {
+                                'name': card.get('name', card.get('heroes', {}).get('name', 'Unknown')),
+                                'handle': card.get('handle', card.get('heroes', {}).get('handle', 'Unknown')),
+                                'stars': card.get('stars', card.get('heroes', {}).get('stars', 0))
+                            },
+                            'card_weighted_score': card.get('card_weighted_score', card.get('weighted_score', 0))
+                        }
+                        cards.append(processed_card)
                 
                 meta = data.get('meta', {})
                 current_page = meta.get('currentPage', 0)
                 last_page = meta.get('lastPage', 0)
                 
-                if current_page >= last_page:
+                if current_page >= last_page or not meta:
                     break
                     
                 page += 1
